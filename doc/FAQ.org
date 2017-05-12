@@ -151,15 +151,15 @@ should not be loaded before =dotspacemacs/user-config=, otherwise both versions
 will be loaded and will conflict.
 
 Because of autoloading, calling to =org= functions will trigger the loading up
-of the =org= shipped with emacs wich will induce conflicts. One way to avoid
+of the =org= shipped with emacs which will induce conflicts. One way to avoid
 conflict is to wrap your =org= config code in a =with-eval-after-load= block
 like this:
 
 #+BEGIN_SRC emacs-lisp
-(with-eval-after-load 'org
-  ;; here goes your Org config :)
-  ;; ....
-  )
+  (with-eval-after-load 'org
+    ;; Org config goes here
+    ;; ....
+    )
 #+END_SRC
 
 ** Why is Spacemacs hanging on startup?
@@ -200,7 +200,7 @@ Instead, call =helm-M-x= first, select the command you want to run, and press
 In the terminal version of Emacs, color themes will not render correctly as
 colors are rendered by the terminal and not by emacs. You will probably have to
 change your terminal color palette. More explanations can be found on
-[[https://github.com/sellout/emacs-color-theme-solarized#important-note-for-terminal-users][emacs-color-theme-solarized webpage]].
+[[https://github.com/sellout/emacs-color-theme-solarized#user-content-important-note-for-terminal-users][emacs-color-theme-solarized webpage]].
 
 ** Typing quickly =fd= takes me out of =insert state=. What is going on?
 This is a feature of Spacemacs, enabling you to easily escape from a lot of
@@ -263,9 +263,6 @@ the list =dotspacemacs-excluded-packages= if you prefer setting =exec-path=
 yourself.
 
 * How do I:
-:PROPERTIES:
-:CUSTOM_ID: how-do-i
-:END:
 ** Install a package not provided by a layer?
 Spacemacs provides a variable in the =dotspacemacs/layers= function in
 =.spacemacs= called =dotspacemacs-additional-packages=. Just add a package name
@@ -304,9 +301,6 @@ dotfile. The following snippet disables company for =python-mode=:
 #+END_SRC
 
 ** Change special buffer rules?
-   :PROPERTIES:
-   :CUSTOM_ID: change-special-buffer-rules
-   :END:
 To change the way spacemacs marks buffers as useless, you can customize
 =spacemacs-useless-buffers-regexp= which marks buffers matching the regexp as
 useless. The variable =spacemacs-useful-buffers-regexp= marks buffers matching
@@ -424,11 +418,11 @@ For instance, if you want to switch ~SPC S~ (spelling) with ~SPC d~ (used by
 dash) to make the former easier to reach, you can use:
 
 #+BEGIN_SRC emacs-lisp
-(defun dear-leader/swap-keys (key1 key2)
-  (let ((map1 (lookup-key spacemacs-default-map key1))
-        (map2 (lookup-key spacemacs-default-map key2)))
-    (spacemacs/set-leader-keys key1 map2 key2 map1)))
-(dear-leader/swap-keys "S" "d")
+  (defun dear-leader/swap-keys (key1 key2)
+    (let ((map1 (lookup-key spacemacs-default-map key1))
+          (map2 (lookup-key spacemacs-default-map key2)))
+      (spacemacs/set-leader-keys key1 map2 key2 map1)))
+  (dear-leader/swap-keys "S" "d")
 #+END_SRC
 
 If you want to define your own alias, like using ~SPC é~ (because it's a not
@@ -521,7 +515,7 @@ some expressions to the search input:
   ending with =.el= which are emacs-lisp files.
 
 - By using a flag like =--python= which should be self-explaining. The list of
-  available flags colud be accessed from terminal with:
+  available flags could be accessed from terminal with:
 
   #+begin_src shell
   ag --list-file-types

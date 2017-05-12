@@ -11,6 +11,7 @@
 
 (setq version-control-packages
       '(
+        browse-at-remote
         diff-mode
         diff-hl
         evil-unimpaired
@@ -58,9 +59,6 @@
       (when (and (eq version-control-diff-tool 'git-gutter)
                  version-control-global-margin)
         (global-git-gutter-mode t))
-      ;; If you would like to use git-gutter.el and linum-mode
-      (if dotspacemacs-line-numbers
-          (git-gutter:linum-setup))
       (setq git-gutter:update-interval 2
             git-gutter:modified-sign " "
             git-gutter:added-sign "+"
@@ -208,3 +206,8 @@
         ("r" smerge-refine)
         ("u" undo-tree-undo)
         ("q" nil :exit t)))))
+
+(defun version-control/init-browse-at-remote ()
+  (use-package browse-at-remote
+    :defer t
+    :init (spacemacs/set-leader-keys "gho" 'browse-at-remote)))

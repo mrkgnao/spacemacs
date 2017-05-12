@@ -17,6 +17,7 @@
     flycheck
     (flycheck-rust :toggle (configuration-layer/package-usedp 'flycheck))
     ggtags
+    exec-path-from-shell
     helm-gtags
     rust-mode
     toml-mode
@@ -34,6 +35,7 @@
         "cX" 'cargo-process-run-example
         "cc" 'cargo-process-build
         "cd" 'cargo-process-doc
+        "cD" 'cargo-process-doc-open
         "ce" 'cargo-process-bench
         "cf" 'cargo-process-current-test
         "cf" 'cargo-process-fmt
@@ -83,10 +85,15 @@
     ;; Don't pair lifetime specifiers
     (sp-local-pair 'rust-mode "'" nil :actions nil)))
 
-(defun rust/init-racer ()
-  (when (memq window-system '(mac ns x))
-    (exec-path-from-shell-copy-env "RUST_SRC_PATH"))
 
+(defun rust/pre-init-exec-path-from-shell ()
+  (spacemacs|use-package-add-hook exec-path-from-shell
+    :pre-config
+    (let ((var "RUST_SRC_PATH"))
+      (unless (or (member var exec-path-from-shell-variables) (getenv var))
+        (push var exec-path-from-shell-variables)))))
+
+(defun rust/init-racer ()
   (use-package racer
     :defer t
     :init

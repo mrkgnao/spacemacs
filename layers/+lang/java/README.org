@@ -12,47 +12,48 @@
      - [[#installation][Installation]]
      - [[#about-maven][About Maven]]
    - [[#eclim][Eclim]]
-     - [[#installation-1][Installation]]
+     - [[#installation][Installation]]
        - [[#eclipse][Eclipse]]
-       - [[#eclim-1][Eclim]]
+       - [[#eclim][Eclim]]
      - [[#configuration][Configuration]]
      - [[#usage][Usage]]
    - [[#ensime][ENSIME]]
-     - [[#installation-2][Installation]]
-     - [[#usage-1][Usage]]
+     - [[#installation][Installation]]
+     - [[#configuration][Configuration]]
+     - [[#usage][Usage]]
      - [[#issues][Issues]]
  - [[#key-bindings][Key bindings]]
-   - [[#meghanada-1][Meghanada]]
+   - [[#meghanada][Meghanada]]
      - [[#server][Server]]
      - [[#navigation][Navigation]]
      - [[#compilation][Compilation]]
      - [[#tests-junit][Tests (junit)]]
      - [[#refactoring][Refactoring]]
      - [[#tasks][Tasks]]
-   - [[#eclim-2][Eclim]]
+   - [[#eclim][Eclim]]
      - [[#java-mode][Java-mode]]
        - [[#project-management][Project management]]
        - [[#eclim-daemon][Eclim daemon]]
        - [[#maven][Maven]]
        - [[#goto][Goto]]
-       - [[#refactoring-1][Refactoring]]
+       - [[#refactoring][Refactoring]]
        - [[#documentation-find][Documentation, Find]]
        - [[#errors-problems][Errors (problems)]]
        - [[#tests][Tests]]
      - [[#errors-problems-buffer][Errors (problems) buffer]]
      - [[#projects-buffer][Projects buffer]]
-   - [[#ensime-1][Ensime]]
+   - [[#ensime-key-bindings][Ensime key bindings]]
      - [[#search][Search]]
      - [[#sbt][sbt]]
      - [[#typecheck][Typecheck]]
      - [[#debug][Debug]]
      - [[#errors][Errors]]
-     - [[#goto-1][Goto]]
+     - [[#goto][Goto]]
      - [[#print-and-yank-types][Print and yank types]]
      - [[#documentation-inspect][Documentation, Inspect]]
-     - [[#server-1][Server]]
-     - [[#refactoring-2][Refactoring]]
-     - [[#tests-1][Tests]]
+     - [[#server][Server]]
+     - [[#refactoring][Refactoring]]
+     - [[#tests][Tests]]
      - [[#repl][REPL]]
 
 * Description
@@ -86,7 +87,6 @@ Backend can be chosen on a per project basis using directory local variables
 #+END_SRC
 
 *Note:* you can easily add a directory local variable with ~SPC f v d~.
-
 
 * Backends
 ** Meghanada
@@ -173,12 +173,9 @@ Auto-save feature may freeze Emacs sometimes, use ~C-g~ to unfreeze Emacs or
 atlernatively you can set =dotspacemacs-auto-save-file-location= to nil.
 
 ** ENSIME
-  :PROPERTIES:
-  :CUSTOM_ID: ensime
-  :END:
 Another backend option is the ENSIME server, which is a lot more responsive than
 Eclim. ENSIME is originally made to work with Scala but it now works with plain
-Java projects as well, some calls it ENJIME.
+Java projects as well.
 
 *** Installation
 Find it with your favourite package manager, eg:
@@ -187,7 +184,9 @@ Find it with your favourite package manager, eg:
 #+END_SRC
 or refer to [[http://www.scala-sbt.org/download.html][the sbt installation instructions]].
 
-You also need to follow [[https://ensime.github.io/build_tools/sbt/][the ENSIME configuration instructions]] to run ENSIME.
+*** Configuration
+Follow [[https://ensime.github.io/build_tools/sbt/][the ENSIME configuration instructions]]. Spacemacs uses
+the development version of Ensime so follow the appropriate steps.
 
 To use the build functions under ~SPC m b~ you need to use version =0.13.5= or
 newer of =sbt=, and specify that in your project's =project/build.properties=.
@@ -197,7 +196,9 @@ For example,
 #+END_SRC
 
 *** Usage
-Start the ensime server by running ~SPC SPC ensime~ or ~M-x ensime~.
+~SPC SPC spacemacs/ensime-gen-and-restart~ or ~SPC m D r~ generates a new config
+for a project and starts the server. Afterwards ~SPC SPC ensime~ or ~SPC m D s~
+will suffice do the trick.
 
 *** Issues
 ENSIME is originally built for Scala, so support for java is not complete, in
@@ -245,11 +246,11 @@ particular refactoring doesn't work.
 
 *** Refactoring
 
- | Key Binding | Description                                  |
- |-------------+----------------------------------------------|
- | ~SPC m =~   | Beautify code                                |
- | ~SPC m r i~ | Optimize imports                             |
- | ~SPC m r I~ | Import all                                   |
+ | Key Binding | Description      |
+ |-------------+------------------|
+ | ~SPC m =~   | Beautify code    |
+ | ~SPC m r i~ | Optimize imports |
+ | ~SPC m r I~ | Import all       |
 
 *** Tasks
 
@@ -364,10 +365,7 @@ particular refactoring doesn't work.
  | ~u~         | unmark current project                     |
  | ~U~         | unmark all projects                        |
 
-** Ensime
-  :PROPERTIES:
-  :CUSTOM_ID: ensime-key-bindings
-  :END:
+** Ensime key bindings
 *** Search
 
 | Key Binding | Description                                         |
@@ -430,6 +428,7 @@ particular refactoring doesn't work.
 | ~SPC m g t~ | go to test           |
 
 *** Print and yank types
+
 |-------------+--------------------------------|
 | ~SPC m h T~ | print full type name at point  |
 | ~SPC m h t~ | print short type name at point |

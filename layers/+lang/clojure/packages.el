@@ -112,6 +112,7 @@
           "hj" 'cider-javadoc
           "hn" 'cider-browse-ns
 
+          "e;" 'cider-eval-defun-to-comment
           "eb" 'cider-eval-buffer
           "ee" 'cider-eval-last-sexp
           "ef" 'cider-eval-defun-at-point
@@ -124,7 +125,7 @@
           "fb" 'cider-format-buffer
 
           "gb" 'cider-pop-back
-          "gC" 'cider-classpath
+          "gc" 'cider-classpath
           "ge" 'cider-jump-to-compilation-error
           "gr" 'cider-jump-to-resource
           "gn" 'cider-browse-ns
