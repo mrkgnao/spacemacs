@@ -75,10 +75,10 @@ Paths must have a trailing slash (ie. `~/.mycontribs/')")
 (defvar dotspacemacs-install-packages 'used-only
   "Defines the behaviour of Spacemacs when installing packages.
 Possible values are `used-only', `used-but-keep-unused' and `all'. `used-only'
-installs only explicitly used packages and uninstall any unused packages as well
+installs only explicitly used packages and deletes any unused packages as well
 as their unused dependencies. `used-but-keep-unused' installs only the used
-packages but won't uninstall them if they become unused. `all' installs *all*
-packages supported by Spacemacs and never uninstall them.")
+packages but won't delete unused ones. `all' installs *all*
+packages supported by Spacemacs and never uninstalls them.")
 
 (defvar dotspacemacs-enable-lazy-installation 'unused
   "Lazy installation of layers (i.e. layers are installed only when a file
@@ -215,6 +215,10 @@ if used there.")
 (defvar dotspacemacs-auto-resume-layouts nil
   "If non nil then the last auto saved layouts are resume automatically upon
 start.")
+
+(defvar dotspacemacs-auto-generate-layout-names nil
+  "If non-nil, auto-generate layout name when creating new layouts.
+Only has effect when using the \"jump to layout by number\" commands.")
 
 (defvar dotspacemacs-max-rollback-slots 5
   "Maximum number of rollback slots to keep in the cache.")
@@ -442,10 +446,13 @@ Returns non nil if the layer has been effectively inserted."
     (with-current-buffer (find-file-noselect (dotspacemacs/location))
       (beginning-of-buffer)
       (let ((insert-point (re-search-forward
-                           "dotspacemacs-configuration-layers *\n?.*\\((\\)")))
-        (insert (format "\n%S" layer-name))
-        (indent-region insert-point (+ insert-point
-                                       (length (symbol-name layer-name))))
+                           "dotspacemacs-configuration-layers\\s-*\n?[^(]*\\((\\)")))
+        (insert (format "%S" layer-name))
+        (unless (equal (point) (point-at-eol))
+          (insert "\n"))
+        (indent-region insert-point (min (point-max)
+                                         (+ insert-point 2
+                                            (length (symbol-name layer-name)))))
         (save-buffer)))
     (load-file (dotspacemacs/location))
     t))
